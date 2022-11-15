@@ -1,0 +1,16 @@
+*{
+    padding : 0px ;
+    margin : 0px ;
+    box-sizing : border-box ;
+  }
+  body {
+    height : 100vh ;
+    width : 100% ;
+    background : #000 ;
+    color : #fff
+  }
+  body , div {
+    display : flex ;
+    align-items : center ;
+    justify-content : center
+  }
