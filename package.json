@@ -1,10 +1,10 @@
 {
   "name": "n-temp",
   "version": "1.0.0",
-  "description": "",
+  "description": "download media",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -17,8 +17,10 @@
   },
   "homepage": "https://github.com/ed-dinaoui/node-temp#readme",
   "dependencies": {
+    "async": "^3.2.4",
     "cors": "^2.8.5",
     "express": "^4.18.2",
-    "ytdl-core": "^4.11.2"
-  }
+    "youtube-dl-exec": "^2.1.8"
+  },
+  "devDependencies": {}
 }
