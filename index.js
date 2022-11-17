@@ -10,15 +10,7 @@ var async = require('async');
 const port = process.env.PORT || 3000;
 
 app.use(cors({ origin: true , credentials :  true}));
-//
-//
-//app.listen(4000, () => {
-//    console.log('Server Works !!! At port 4000');
-//});
-//
-//app.use(express.static(path.join(__dirname, 'public')));
-//
-//
+
 app.use(express.static(path.join(__dirname, 'public/build')));
 
 app.get('/', function (req, res) {

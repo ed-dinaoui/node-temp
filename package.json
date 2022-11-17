@@ -4,7 +4,9 @@
   "description": "download media",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "react": "npm run build --prefix public",
+    "dev": "npm run react && npm run start"
   },
   "repository": {
     "type": "git",
