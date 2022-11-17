@@ -6,8 +6,13 @@ import Input from './components/input' ;
 function App() {
   return (
     <main>
-      <Input />
-      <Info />
+      <div>
+        <Input />
+        <Info />
+      </div>
+      <div>
+        
+      </div>
     </main>
   );
 }

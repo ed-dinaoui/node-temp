@@ -9,6 +9,8 @@ function Info () {
                 <p> Title could be anything </p>
                 <div>  </div>
             </div>
+
+            
         </div>
     )
 }
