@@ -7,18 +7,104 @@ main > div:nth-child(1) {
     row-gap: calc(10% - 2em) ;
 }
 main > div:nth-child(1) > * {
-    width : 90%
+    width : 93%
 }
 main > div:nth-child(1) > input {
-    height : 2.5em 
+    height : 2.5em ;
+    outline: none ;
+    background : var(--border) ;
+    border : none ;
+    padding :0 1em
 }
+
+/**/
 main > div:nth-child(1) > div {
     max-height : 90% ;
-    border : 1px solid var(--color)
+    border : 1px solid var(--half-border) ;
+    row-gap : 1em ;
+    justify-content : flex-start ;
+    align-items : flex-start ;
+    transition-duration: 1s ;
+    /**/
+    overflow-y : auto ;
+    scroll-behavior: smooth ;
+    scrollbar-width: 5px 10px ;
+    scrollbar-color: var(--half-border) transparent ;
+}
+main > div:nth-child(1) > div::-webkit-scrollbar {
+    width: 5px;
+}
+main > div:nth-child(1) > div::-webkit-scrollbar-track {
+    background: transparent;
+}
+main > div:nth-child(1) > div::-webkit-scrollbar-thumb {
+    background: var(--half-border);
+}
+/**/
+
+main > div:nth-child(1) > div::after{
+    content: '';
+    position: absolute;
+    height: 10%;
+    width: 25%;
+    background: linear-gradient(to bottom , rgba(5,5,5,0) , var(--background));
+    top: 90%;
+    pointer-events: none;
+}
+main > div:nth-child(1) > div > div {
+    min-height : 6em ;
+    max-height : 6em ;
+    background : var(--half-border) ;
+    width : 90% ;
+    justify-content : space-between ;
+    padding : .7em 0 ;
+    transition-duration : .5s ;
+}
+main > div:nth-child(1) > div > div > * {
+    width : 90% ;
+    height : contain ;
+}
+main > div:nth-child(1) > div > div > div {
+    flex-direction : row ;
+    column-gap : 1em ;
+}
+main > div:nth-child(1) > div > div > div:nth-last-child(1) {
+    justify-content : flex-end ;
+}
+main > div:nth-child(1) > div > div > div:nth-last-child(2) {
+    justify-content : flex-start
+}
+main > div:nth-child(1) > div > div > div:nth-last-child(3) {
+    justify-content : space-between ;
+}
+main > div:nth-child(1) > div > div > div:nth-child(1) > p {
+    max-width : 90%
+}
+main > div:nth-child(1) > div > div > div:nth-child(1) > p:nth-child(2),
+main > div:nth-child(1) > div > div > div:nth-child(3) > p{
+    cursor : pointer ;
+    color : var(--color-2)
+}
+main > div:nth-child(1) > div > div button {
+    width : 5em ;
+    height : 1.5em ;
+    border-radius : 1em ;
+    text-align : center ;
+    background : #000 ; 
+    border : 1px solid var(--border) ;
+    cursor : pointer ;
 }
 main > div:nth-child(2) {
     width : 10% ;
-    border : 1px solid var(--color) 
+    border : 1px solid var(--half-border) ;
+    row-gap : calc(10% - 2em) ;
+}
+main > div:nth-child(2) > button {
+    width : 100% ;
+    background : var(--half-border) ;
+    border : none ;
+    height : 2.5em ;
+    cursor : pointer ;
 }
 
 @media only screen and ( max-width : 900px ) {
