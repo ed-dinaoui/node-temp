@@ -2,13 +2,13 @@ import React from 'react' ;
 import './compo.css' ;
 
 
-export function Add_btn () {
+export function AddBtn () {
     return(
         <button>add</button>
     )
 }
 
-export function Do_all_btn () {
+export function DoAllBtn () {
     return (
         <button>do. all</button>
     )

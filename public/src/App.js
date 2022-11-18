@@ -1,7 +1,7 @@
 import React from 'react';
 import Info from './components/info' ;
 import Input from './components/input' ;
-import { Add_btn , Do_all_btn } from './components/btns' ;
+import { AddBtn , DoAllBtn } from './components/btns' ;
 
 
 function App() {
@@ -12,8 +12,8 @@ function App() {
         <Info />
       </div>
       <div>
-        <Add_btn />
-        <Do_all_btn />
+        <AddBtn />
+        <DoAllBtn />
       </div>
     </main>
   );
