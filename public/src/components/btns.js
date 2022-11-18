@@ -13,3 +13,9 @@ export function DoAllBtn () {
         <button>do. all</button>
     )
 }
+
+export function DoBtn () {
+    return (
+        <button>do.</button>
+    )
+}

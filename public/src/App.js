@@ -1,7 +1,7 @@
 import React from 'react';
 import Info from './components/info' ;
 import Input from './components/input' ;
-import { AddBtn , DoAllBtn } from './components/btns' ;
+import { AddBtn , DoAllBtn , DoBtn } from './components/btns' ;
 
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
     <main>
       <div>
         <Input />
-        <Info />
+        <Info btn={<DoBtn />} />
       </div>
       <div>
         <AddBtn />

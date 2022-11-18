@@ -21,27 +21,18 @@ app.listen(port, () => {
  console.log(`on port :${port}`);
 });
 
-
-/////
-
 // add
-
-app.get( '/info' , (req,res) => {
-  var URL = req.query.URL ;
-  getVideo( URL , 'info' , 'mp3' )
-} )
-
-
+//app.get( '/info' , (req,res) => {
+//  var URL = req.query.URL ;
+//  getVideo( URL , 'info' , 'mp3' )
+//} )
 //
-// donwload
-
-app.get('/download' , (req,res) => {
-  var URL = req.query.URL ;
-  getVideo( URL , 'not_info' , 'mp3' )
-})
-
-//
-
+//// donwload
+//app.get('/download' , (req,res) => {
+//  var URL = req.query.URL ;
+//  getVideo( URL , 'not_info' , 'mp3' )
+//})
+////
 
 var getVideo = (videoURL, operation ,format , output) => {
 
