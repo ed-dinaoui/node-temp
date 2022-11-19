@@ -40,7 +40,7 @@ export function DoBtn () {
         fileLink.setAttribute('download', fileName);
         document.body.appendChild(fileLink);
         fileLink.click();
-        fileLink.parentNode.removeChild(fileLink);
+        fileLink.parentNode.removeChild(fileLink)
         
     }
     return (

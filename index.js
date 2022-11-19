@@ -21,7 +21,7 @@ app.get('/', function (req, res) {
 app.get('/info' , (req,res) => {
   var URL = req.query.URL ;
   getVideoInfo( URL , 'mp3' , (data) => { res.json({data : data}) } )
-})
+}) ;
 
 app.get('/download' , cors({
       exposedHeaders: ['Content-Disposition'],
