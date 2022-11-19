@@ -7,8 +7,8 @@ const path = require('path') ;
 var fs = require('fs');
 var youtubedl = require('youtube-dl-exec');
 var async = require('async');
+const { pathToFileURL } = require('url');
 const port = process.env.PORT || 3000;
-const http = require('url') ;
 
 app.use(cors({ origin: true , credentials :  true}));
 
@@ -23,19 +23,26 @@ app.get('/info' , (req,res) => {
   getVideoInfo( URL , 'mp3' , (data) => { res.json({data : data}) } )
 })
 
+app.get('/download' , cors({
+      exposedHeaders: ['Content-Disposition'],
+  }), (req,res) => {
+  var URL = req.query.URL ;
+  console.log( __dirname + '/output/' + URL) ;
+
+  const stream = fs.createReadStream( pathToFileURL(__dirname + '/output/' + URL) );
+  res.set({
+    'Content-Disposition': `attachment; filename='${URL}'`,
+    'Content-Type': 'audio/mp3',
+  });
+  stream.pipe(res);
+
+})
 
 
 app.listen(port, () => {
- console.log(`on port :${port}`);
+ console.log(` on port : ${port} `);
 });
 
-
-
-
-app.get('/download' , (req,res) => {
-  var URL = req.query.URL ;
-  getVideo( URL , 'mp3' , () => () => { res.end() } )
-})
 
 
 
@@ -67,7 +74,7 @@ var getVideoInfo = ( videoUrl , format , call ) => {
 }
 
 
-var getVideo = (videoURL , format) => {
+var getVideo = (videoURL , format , call) => {
   
   youtubedl( videoURL , Object.assign( is_audio(format) , {
     noCheckCertificates: true,
@@ -76,6 +83,7 @@ var getVideo = (videoURL , format) => {
       'referer:youtube.com',
       'user-agent:googlebot'
     ] ,
+    paths : __dirname + '/output/'
   })).then(
     err => console.log(err)
   );

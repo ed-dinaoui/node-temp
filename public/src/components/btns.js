@@ -1,5 +1,6 @@
 import React , { useEffect } from 'react' ;
 import './compo.css' ;
+import Axios from 'axios' ;
 
 
 export function AddBtn (props) {
@@ -24,9 +25,23 @@ export function DoAllBtn () {
 
 export function DoBtn () {
     var click = e => {
-        let val = document.getElementById('input').value ,
-            loc = window.location.href ;
-        window.location.href += 'download?URL=' + val
+        let val = document.getElementById('input').value ;
+
+        var url = 'Hilary Hahn - J.S. Bach： Partita for Violin Solo No. 1 in B Minor, BWV 1002 - 4. Doubl... [iEBX_ouEw1I].mp3' ;
+        const response = Axios.get('/download?URL=' + url, { responseType: 'blob' });
+        if (response.data.error) {
+            console.log(response.data.error)
+        }
+
+        const fileURL = window.URL.createObjectURL(new Blob([response.data]));
+        const fileLink = document.createElement('a');
+        fileLink.href = fileURL;
+        const fileName = response.headers['content-disposition'].substring(22, 52);
+        fileLink.setAttribute('download', fileName);
+        document.body.appendChild(fileLink);
+        fileLink.click();
+        fileLink.parentNode.removeChild(fileLink);
+        
     }
     return (
         <button onClick={click} >do.</button>
