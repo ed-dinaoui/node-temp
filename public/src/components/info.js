@@ -1,6 +1,10 @@
 import React , { useState } from 'react' ;
+import { DoBtn } from './form' ;
 import './compo.css' ;
-import { DoBtn } from './btns' ;
+
+
+var media = new Array ;
+
 
 var InfoCard = props => {
     const [ is , set_is ] = useState(true) ;
@@ -23,7 +27,7 @@ var InfoCard = props => {
                 } style={ { color : is_audio ? 
                         'var(--color)' :
                         'var(--color-2)' } } >mp3</p>
-                <DoBtn />
+                <DoBtn url={ props.url } />
             </div>
         </div>
     ) : []
@@ -33,13 +37,10 @@ var InfoCard = props => {
 function Info () {
     return (
         <div>
-
             <InfoCard title='video title - can be something' duration='3:15' size='16.1MB' />
-            
         </div>
     )
 }
 
 
-
-export default Info 
+export default Info ;

@@ -1,7 +1,6 @@
 import React from 'react';
 import Info from './components/info' ;
-import Input from './components/input' ;
-import { AddBtn , DoAllBtn } from './components/btns' ;
+import { AddBtn , DoAllBtn , Input } from './components/form' ;
 
 
 function App() {
