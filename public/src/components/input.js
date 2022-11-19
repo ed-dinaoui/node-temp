@@ -3,7 +3,7 @@ import './compo.css' ;
 
 
 function Input () {
-    return <input type={'url'} placeholder={'Youtube video URL'} />
+    return <input type={'url'} id={'input'} placeholder={'Youtube video URL'} />
 }
 
 

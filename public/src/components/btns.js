@@ -1,10 +1,18 @@
-import React from 'react' ;
+import React , { useEffect } from 'react' ;
 import './compo.css' ;
 
 
-export function AddBtn () {
+export function AddBtn (props) {
+    var click = () => {
+        let val = document.getElementById('input').value ;
+
+        fetch("/info?URL="+val)
+            .then((res) => res.json())
+            .then((data) => console.log(data.data));
+
+    }
     return(
-        <button>add</button>
+        <button onClick={click} >add</button>
     )
 }
 
@@ -15,7 +23,12 @@ export function DoAllBtn () {
 }
 
 export function DoBtn () {
+    var click = e => {
+        let val = document.getElementById('input').value ,
+            loc = window.location.href ;
+        window.location.href += 'download?URL=' + val
+    }
     return (
-        <button>do.</button>
+        <button onClick={click} >do.</button>
     )
 }
