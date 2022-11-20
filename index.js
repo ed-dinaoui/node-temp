@@ -19,7 +19,7 @@ app.get('/', function (req, res) {
 
 app.get('/info' , (req,res) => {
   var URL = req.query.URL ;
-  getVideoInfo( URL , req.query.F , data =>  res.json({data : data , url : URL})  )
+  getVideoInfo( URL , req.query.F , data =>  res.json({data : data , url : URL , f : req.query.F })  )
 }) ;
 
 app.get('/download' , async (req,res) => {

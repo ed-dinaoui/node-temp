@@ -7,17 +7,17 @@ class M_Array {
     constructor(){
         this._arr = new Array ;
     } ;
-    set_media(params , ur){
+    set_media(params , ur ,f){
         var newMedia = {
             title : params.title ,
             url : ur ,
             size : (params.filesize / 1000000).toFixed(2) + 'MB' ,
             duration : params.duration_string ,
+            f : f
         }
         this._arr.push(newMedia) ;
         this.get_media(params.title)['_div'] = <InfoCard p={newMedia} /> ;
         g_up_fn() ;
-        console.log(params._type)
     }
     remove_media(n){
         this._arr.splice( this._arr.indexOf(this.get_media(n)) , 1 ) ;
@@ -38,7 +38,7 @@ export var S_Media = new M_Array ;
 
 var InfoCard = props => {
     const [ is , set_is ] = useState(true) ;
-    const [ is_audio , set_is_audio ] = useState(true) ;
+    const [ is_audio , set_is_audio ] = useState( ( props.f === 'mp3' ) ? true : false ) ;
 
     return is ? (
         <div className={tr(props.p.title)} >
@@ -58,9 +58,9 @@ var InfoCard = props => {
                     e => {
                         set_is_audio( is_audio ? false : true ) ;
                         S_Media.remove_media(props.p.title) ;
-                        fetch("/info?F="+ (is_audio ? "mp3" : "mp4") +"&URL=" + props.p.url )
+                        fetch(`/info?F=${is_audio ? `mp3` : `mp4`}&URL=${props.p.url}` )
                             .then((res) => res.json())
-                            .then((data) => S_Media.set_media(data.data , props.p.url) );
+                            .then((data) => S_Media.set_media(data.data , data.url , data.f ) );
                     }
                 } style={ { color : is_audio ? 
                         'var(--color)' :

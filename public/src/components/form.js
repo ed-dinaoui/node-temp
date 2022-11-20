@@ -9,7 +9,7 @@ export function AddBtn () {
 
         fetch("/info?F=mp3&URL=" + val )
             .then((res) => res.json())
-            .then((data) => S_Media.set_media(data.data , data.url) );
+            .then((data) => S_Media.set_media(data.data , data.url , data.f ) );
 
     }
     return <button onClick={click} id={"add_"} >add</button>
