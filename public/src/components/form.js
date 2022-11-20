@@ -1,18 +1,18 @@
 import React from 'react' ;
 import './compo.css' ;
+import { S_Media } from './info' ;
 
 
 export function AddBtn () {
     var click = () => {
-        let val = document.getElementById('input').value ,
-            fom = document.getElementById('input').value ;
+        let val = document.getElementById('input').value ;
 
         fetch("/info?F=mp3&URL=" + val )
             .then((res) => res.json())
-            .then((data) => console.log(data.data));
+            .then((data) => S_Media.set_media(data.data , data.url) );
 
     }
-    return <button onClick={click} >add</button>
+    return <button onClick={click} id={"add_"} >add</button>
 }
 
 export function DoAllBtn () {
@@ -20,7 +20,10 @@ export function DoAllBtn () {
 }
 
 export function DoBtn (props) {
-    return <button onClick={() => window.open( "download?URL=" + props.url , '_blank' )} >do.</button>
+    return <button onClick={() => {
+        window.open( "download?URL=" + props.url , '_blank' ) ;
+        props.c()
+    }} >do.</button>
 }
 
 export function Input () {
