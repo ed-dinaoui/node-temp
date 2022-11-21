@@ -2,6 +2,7 @@ main > div {
     justify-content : flex-start ;
     align-items : flex-start ;
 }
+
 main > div:nth-child(1) {
     width : 40% ;
     row-gap: calc(10% - 2em) ;

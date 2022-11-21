@@ -4,14 +4,19 @@ import { AddBtn , DoAllBtn , Input } from './components/form' ;
 
 
 function App() {
+  var inf ;
+  var s = n => {
+    inf = n ;
+    console.log('App.inf   : '+inf)
+  }
   return (
     <main>
       <div>
         <Input />
-        <Info />
+        <Info da={inf} />
       </div>
       <div>
-        <AddBtn />
+        <AddBtn sw={s} />
         <DoAllBtn />
       </div>
     </main>
