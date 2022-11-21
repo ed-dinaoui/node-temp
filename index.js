@@ -54,7 +54,7 @@ app.get('/info' , (req,res) => {
       duration : data.duration_string ,
       size : (data.filesize / 1000000).toFixed(2) + 'MB' ,
       media_type : req.query.F 
-    }
+    } ;
     C_Media.set_media_info(newMedia) ;
     res.json({ nM : newMedia }) 
   } )
@@ -62,7 +62,7 @@ app.get('/info' , (req,res) => {
 
 app.get('/media' , (req,res) => {
   res.json( { 
-    media : (req.query.ID === 'all') ? C_Media._arr : C_Media.get_media(req.query.ID)
+    media : C_Media._arr 
   } )
 } )
 

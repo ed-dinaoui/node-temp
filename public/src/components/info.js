@@ -1,11 +1,11 @@
-import React , { useState } from 'react' ;
+import React , { useState , useEffect } from 'react' ;
 import { DoBtn } from './form' ;
 import './compo.css' ;
 
+export var up_ga_a ;
 
 
-
-var InfoCard = props => {
+function InfoCard (props) {
     const [ is , set_is ] = useState(true) ;
     const [ info , set_info ] = useState(props.p) ;
     
@@ -28,6 +28,7 @@ var InfoCard = props => {
                     () => {
                         let f = ( info.media_type === 'mp3' ) ? 'mp4' : 'mp3' ;
                         fetch('/rm?ID=' + info.id ) ;
+                        
                         fetch(`/info?F=${f}&URL=${info.url}`)
                         .then(res => res.json())
                         .then(
@@ -45,15 +46,28 @@ var InfoCard = props => {
 }
 
 
-function Info (props) {
-    var a = [] ;
-    a.push(<InfoCard p={props.da} />) ;
-    
-    fetch("/media?ID=all")
-    .then(res => res.json())
-    .then(data => {
-        data.media.forEach(ob => a.push(<InfoCard p={ob} />)) 
+function Info () {
+    const [ spe_a , set_spe_a ] = useState({
+        url : "URL" ,
+        id : "data.channel_id + req.query.F" ,
+        title : "data.title" ,
+        duration : "63:00" ,
+        size : 1000000 + 'MB' ,
+        media_type : "mp3" 
     }) ;
+    
+    up_ga_a = ob => set_spe_a(ob) ;
+    
+    var a = [] ;
+    
+    
+        fetch("/media")
+        .then(res => res.json())
+        .then(data => {
+            data.media.forEach(ob => a.push(<InfoCard p={ob} />)) 
+        }) ;
+    a.push(<InfoCard p={spe_a} />) ;
+    
     
     console.log('a  : '+ a.toString())
     return (

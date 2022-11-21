@@ -1,16 +1,15 @@
 import React from 'react' ;
 import './compo.css' ;
+import { up_ga_a } from './info' ;
 
-
-export function AddBtn (props) {
+export function AddBtn () {
     var click = () => {
         let val = document.getElementById('input').value ;
         // input checks
         fetch("/info?F=mp3&URL=" + val )
         .then(res => res.json())
         .then(data => {
-            console.log('addbtn.sw  :  '+data.nM)
-            props.sw(data.nM)
+            up_ga_a(data.nM)
         })
 
     }
