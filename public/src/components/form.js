@@ -27,9 +27,11 @@ export function DoBtn(props) {
   return (
     <button
       onClick={() => {
-        window.open("download?URL=" + props.tl[0], "_blank");
+        window.open("download?ID=" + props.tl, "_blank");
 
-        fetch("/rm?ID=" + props.tl[1]);
+        fetch("/rm?ID=" + props.tl)
+        .then(re => re.json())
+        .then(d => console.log(d.message))
       }}
     >
       do.

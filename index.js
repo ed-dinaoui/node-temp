@@ -27,14 +27,12 @@ class M_Array {
       return ob.id === id
     })
   }
-  rm_media_info( id ){
+  rm_media_info( id , call ){
     let tar = this.get_media(id) ,
-        t_p = "./output/" + tar.title + '.' + tar.media_type ;
+        t_p =  './output/' + tar.name ;
         
     this._arr.splice( this._arr.indexOf(tar) , 1) ;
-    if( fs.existsSync( t_p ) ){
-      fs.unlink( t_p , err => { if( err ){ throw err } })
-    }
+    fs.unlink( t_p , err => { if( err ){ throw err } ; call() })
   }
 }
 
@@ -51,7 +49,8 @@ app.get('/info' , (req,res) => {
       size : ((
         ( data.filesize !== null ) ? data.filesize : data.filesize_approx
       ) / 1000000).toFixed(2) + 'MB' ,
-      media_type : req.query.F 
+      media_type : req.query.F ,
+      name  : data.title + ' [' + data.display_id + '].' + req.query.F 
     } ;
     C_Media.set_media_info(newMedia) ;
     res.json({ nM : newMedia }) 
@@ -65,11 +64,13 @@ app.get('/media' , (req,res) => {
 } )
 
 app.get('/rm' , (req , res) => {
-  C_Media.rm_media_info(req.query.ID)
+  C_Media.rm_media_info(req.query.ID , res.json({ message : 'deleted!' }))
 })
 
 app.get('/download' , async (req,res) => {
-  res.download( './output/' + req.query.URL ) ;
+  let tar = C_Media.get_media(req.query.ID) ;
+  console.log('to do. : '+ tar.title)
+  res.download(  './output/' + tar.name ) ;
 })
 //
 
