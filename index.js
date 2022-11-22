@@ -5,16 +5,14 @@ const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
 const youtubedl = require('youtube-dl-exec');
-const { response } = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(cors({ origin: true , credentials :  true}));
 app.use(express.static(path.join(__dirname + '/public/build')));
-app.get('/', function (req, res) {
+app.get('/',  res => {
   res.sendFile(path.join(__dirname , '/public/build'), 'index.html')
 });
-//
 //
 class M_Array {
   constructor(  ){
@@ -58,43 +56,27 @@ app.get('/info' , (req,res) => {
   } )
 }) ;
 
-app.get('/media' , (req,res) => {
+app.get('/media' , res => {
   res.json( { 
     media : C_Media._arr 
   } )
 } )
 
 app.get('/rm' , (req , res) => {
-  C_Media.rm_media_info(req.query.ID)
+  C_Media.rm_media_info(req.query.ID) ;
+  res.end() ;
 })
 
 app.get('/download' , async (req,res) => {
   let tar = C_Media.get_media(req.query.ID) ;
   res.download( './output/' + tar.name ) ;
 })
-//
 
+////
 app.listen(port, () => {
  console.log(` on port : ${port} `);
 });
-
-//var mf = ( p ) => {
 //
-//  if(fs.existsSync( p.t )){
-//    fs.unlink( p.t , err => {
-//      if(err) { throw err } ;
-//      mf(p)
-//    } )
-//  }else{
-//    youtubedl( p.url , Object.assign( p.opts , {
-//      paths : './output/' 
-//      } ) ).then(
-//        r => p.c(p.d) ,
-//        err => console.error(err)
-//    )
-//  }
-//}
-
 
 function getVideoInfo ( videoUrl , format , call ) {
   var is_audio = type => {
@@ -155,10 +137,3 @@ function getVideoInfo ( videoUrl , format , call ) {
 //  )
 
 //});
-
-//// donwload
-//app.get('/download' , (req,res) => {
-//  var URL = req.query.URL ;
-//  getVideo( URL , 'not_info' , 'mp3' )
-//})
-////

@@ -43,7 +43,7 @@ main > div:nth-child(1) > div::-webkit-scrollbar-thumb {
 }
 /**/
 
-main > div:nth-child(1) > div::after{
+/*main > div:nth-child(1) > div::after{
     content: '';
     position: absolute;
     height: 10%;
@@ -51,7 +51,8 @@ main > div:nth-child(1) > div::after{
     background: linear-gradient(to bottom , rgba(5,5,5,0) , var(--background));
     top: 90%;
     pointer-events: none;
-}
+}*/
+
 main > div:nth-child(1) > div > div {
     min-height : 6em ;
     max-height : 6em ;
