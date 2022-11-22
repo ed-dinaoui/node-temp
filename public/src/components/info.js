@@ -27,17 +27,14 @@ function InfoCard (props) {
                 <p onClick={ 
                     () => {
                         let f = ( info.media_type === 'mp3' ) ? 'mp4' : 'mp3' ;
-                        fetch('/rm?ID=' + info.id )
-                        .then(re => re.json() )
-                        .then(d => {
-                            console.log(d.message)
-                            fetch(`/info?F=${f}&URL=${info.url}`)
+                        fetch('/rm?ID=' + info.id ) ;
+                        fetch(`/info?F=${f}&URL=${info.url}`)
                             .then(res => res.json())
                             .then(
                                 data =>   
                                     set_info(data.nM) 
                             ) ;
-                        })
+                        
                         
                     }
                 } style={ { color : ( info.media_type === 'mp3' ) ?

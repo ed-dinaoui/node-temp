@@ -5,6 +5,7 @@ const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
 const youtubedl = require('youtube-dl-exec');
+const { response } = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -27,12 +28,12 @@ class M_Array {
       return ob.id === id
     })
   }
-  rm_media_info( id , call ){
+  rm_media_info( id ){
     let tar = this.get_media(id) ,
         t_p =  './output/' + tar.name ;
         
     this._arr.splice( this._arr.indexOf(tar) , 1) ;
-    fs.unlink( t_p , err => { if( err ){ throw err } ; call() })
+    fs.unlinkSync( t_p )
   }
 }
 
@@ -64,13 +65,12 @@ app.get('/media' , (req,res) => {
 } )
 
 app.get('/rm' , (req , res) => {
-  C_Media.rm_media_info(req.query.ID , res.json({ message : 'deleted!' }))
+  C_Media.rm_media_info(req.query.ID)
 })
 
 app.get('/download' , async (req,res) => {
   let tar = C_Media.get_media(req.query.ID) ;
-  console.log('to do. : '+ tar.title)
-  res.download(  './output/' + tar.name ) ;
+  res.download( './output/' + tar.name ) ;
 })
 //
 
