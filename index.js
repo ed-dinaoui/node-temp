@@ -20,11 +20,7 @@ class M_Array {
     this._arr = new Array ;
   }
   set_media_info( params ){
-    var ob = new Object ;
-    for( let i = 0 ; i < params.length ; i++ ){
-      ob[Object.keys(params)[i]] = Object.values(params)[i]
-    }
-    this._arr.push(ob)
+    this._arr.push(params)
   }
   get_media( id ){
     return this._arr.find( ob => {
@@ -33,7 +29,7 @@ class M_Array {
   }
   rm_media_info( id ){
     let tar = this.get_media(id) ,
-        t_p = "./output/" + tar.title ;
+        t_p = "./output/" + tar.title + '.' + tar.media_type ;
         
     this._arr.splice( this._arr.indexOf(tar) , 1) ;
     if( fs.existsSync( t_p ) ){
@@ -52,7 +48,9 @@ app.get('/info' , (req,res) => {
       id : data.channel_id + req.query.F ,
       title : data.title ,
       duration : data.duration_string ,
-      size : (data.filesize / 1000000).toFixed(2) + 'MB' ,
+      size : ((
+        ( data.filesize !== null ) ? data.filesize : data.filesize_approx
+      ) / 1000000).toFixed(2) + 'MB' ,
       media_type : req.query.F 
     } ;
     C_Media.set_media_info(newMedia) ;
@@ -116,36 +114,22 @@ function getVideoInfo ( videoUrl , format , call ) {
         ] ,
       } );
 
+
+  youtubedl( videoUrl , Object.assign( options , {
+          paths : './output/'  
+        } ) ) ;
+
   youtubedl( videoUrl , Object.assign( options , {
     dumpSingleJson: true ,
     } ) ).then(
       data => {
-        //var n = data.title ,
-        //    f = ( format === 'mp3' ) ? 'mp4' : 'mp3' ;
-            
-        youtubedl( videoUrl , Object.assign( options , {
-          paths : './output/'
-        } ) ).then(
-          r => call(data) ,
-          err => console.error(err)
-        )
-          
-        //mf({
-        //  url : videoUrl ,
-        //  t : './output/'+ n + '.' + f , 
-        //  d : data ,
-        //  opts : options ,
-        //  c : call
-        //})
-        
-      }
-      
-       ,
+        call(data)
+      } ,
       err => console.error(err)
   );
 }
 
-
+//   https://www.youtube.com/watch?v=MftJQN2f2M0 
 
 ////
 
