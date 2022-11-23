@@ -2,6 +2,7 @@ main > div {
     justify-content : flex-start ;
     align-items : flex-start ;
 }
+
 main > div:nth-child(1) {
     width : 40% ;
     row-gap: calc(10% - 2em) ;
@@ -20,7 +21,6 @@ main > div:nth-child(1) > input {
 /**/
 main > div:nth-child(1) > div {
     max-height : 90% ;
-    border : 1px solid var(--half-border) ;
     row-gap : 1em ;
     justify-content : flex-start ;
     align-items : flex-start ;
@@ -42,7 +42,7 @@ main > div:nth-child(1) > div::-webkit-scrollbar-thumb {
 }
 /**/
 
-main > div:nth-child(1) > div::after{
+/*main > div:nth-child(1) > div::after{
     content: '';
     position: absolute;
     height: 10%;
@@ -50,10 +50,11 @@ main > div:nth-child(1) > div::after{
     background: linear-gradient(to bottom , rgba(5,5,5,0) , var(--background));
     top: 90%;
     pointer-events: none;
-}
+}*/
+
 main > div:nth-child(1) > div > div {
     min-height : 6em ;
-    max-height : 6em ;
+    max-height : 7em ;
     background : var(--half-border) ;
     width : 90% ;
     justify-content : space-between ;
@@ -87,22 +88,21 @@ main > div:nth-child(1) > div > div > div:nth-child(3) > p{
 }
 main > div:nth-child(1) > div > div button {
     width : 5em ;
-    height : 1.5em ;
+    height : 1.8em ;
     border-radius : 1em ;
     text-align : center ;
-    background : #000 ; 
-    border : 1px solid var(--border) ;
+    background : var(--background) ; 
+    border : none ;
     cursor : pointer ;
 }
 main > div:nth-child(2) {
     width : 10% ;
-    border : 1px solid var(--half-border) ;
     row-gap : calc(10% - 2em) ;
 }
 main > div:nth-child(2) > button {
     width : 100% ;
-    background : var(--half-border) ;
-    border : none ;
+    background : transparent ;
+    border : 1px solid  var(--border);
     height : 2.5em ;
     cursor : pointer ;
 }

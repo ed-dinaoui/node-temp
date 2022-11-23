@@ -1,95 +1,88 @@
 import React , { useState } from 'react' ;
 import { DoBtn } from './form' ;
 import './compo.css' ;
-var g_up_fn ;
 
-class M_Array {
-    constructor(){
-        this._arr = new Array ;
-    } ;
-    set_media(params , ur ,f){
-        var newMedia = {
-            title : params.title ,
-            url : ur ,
-            size : (params.filesize / 1000000).toFixed(2) + 'MB' ,
-            duration : params.duration_string ,
-            f : f
-        }
-        this._arr.push(newMedia) ;
-        this.get_media(params.title)['_div'] = <InfoCard p={newMedia} /> ;
-        g_up_fn() ;
-    }
-    remove_media(n){
-        this._arr.splice( this._arr.indexOf(this.get_media(n)) , 1 ) ;
-        document.querySelector("."+tr(n)).remove() ;
-    }
-    get_media(name){
-        return this._arr.find(ob => {
-            return ob.title === name
-        })
-    }
-}
+export var up_ga_a ;
 
-var tr  = str => {
-    return str.split(" ").join("")
-}
 
-export var S_Media = new M_Array ;
-
-var InfoCard = props => {
+function InfoCard (props) {
     const [ is , set_is ] = useState(true) ;
-    const [ is_audio , set_is_audio ] = useState( ( props.f === 'mp3' ) ? true : false ) ;
+    const [ info , set_info ] = useState(props.p) ;
+    const [ load , set_load ] = useState(false) ;
+    
 
     return is ? (
-        <div className={tr(props.p.title)} >
+        <div className={info.id} >
             <div>
-                <p> { props.p.title } </p>
-                <p onClick={ e => {
+                <p> { info.title } </p>
+                <p onClick={ () => {
                     set_is(false) ;
-                    S_Media.remove_media(props.p.title)
+                    fetch("/rm?ID="+info.id) ;
                 } } >x</p>
             </div>
             <div>
-                <p>{ props.p.duration }</p>
-                <p>{ props.p.size } </p>
+                <p>{ info.duration }</p>
+                <p>{ info.size } </p>
             </div>
-            <div>
-                <p onClick={ 
-                    e => {
-                        set_is_audio( is_audio ? false : true ) ;
-                        S_Media.remove_media(props.p.title) ;
-                        fetch(`/info?F=${is_audio ? `mp3` : `mp4`}&URL=${props.p.url}` )
-                            .then((res) => res.json())
-                            .then((data) => S_Media.set_media(data.data , data.url , data.f ) );
-                    }
-                } style={ { color : is_audio ? 
-                        'var(--color)' :
-                        'var(--color-2)' } } >mp3</p>
-                <DoBtn url={ props.p.title } c={() => S_Media.remove_media(props.p.title) } />
-            </div>
+            {
+                load ? <p>...</p> : (
+                    <div>
+                        <p onClick={ 
+                            () => {
+                            set_load(true) ;
+                            let f = ( info.media_type === 'mp3' ) ? 'mp4' : 'mp3' ;
+                            fetch('/rm?ID=' + info.id ) ;
+                            fetch(`/info?F=${f}&URL=${info.url}`)
+                                .then(res => res.json())
+                                .then(
+                                    data => {
+                                        set_info(data.nM) ;
+                                        set_load(false) ;
+                                    }
+                                ) ;
+                            
+                            }
+                            } style={ { color : ( info.media_type === 'mp3' ) ?
+                            'var(--color)' : 
+                            'var(--color-2)'  } } >
+                                mp3
+                        </p>
+                        <DoBtn tl={info.id} />
+                    </div>
+                )
+            }
         </div>
     ) : []
 }
 
 
 function Info () {
-    const [ up , set_up ] = useState(true) ;
+    const [ a , set_a ] = useState([])
     
-
-    g_up_fn = () =>  set_up(up ? false : true) ;
-
-    var a = [] ;
-
-    S_Media._arr.forEach( ob => {
-        a.push( ob._div )
-    } )
-
+    up_ga_a = () => {
+        fetch("/media")
+        .then(res => res.json())
+        .then(data => {
+            data.media.forEach(ob => {
+                set_a( a.concat(<InfoCard p={ob} />) ) ;
+            } ) 
+        }) ;
+    } ;
+    
+    
+    
+    
+    
+    
     return (
         <div>
             {a}
         </div>
     )
 }
+
+
+
 
 
 export default Info ;

@@ -8,7 +8,7 @@ function App() {
     <main>
       <div>
         <Input />
-        <Info />
+        <Info  />
       </div>
       <div>
         <AddBtn />
