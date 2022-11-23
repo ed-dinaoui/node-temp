@@ -98,7 +98,6 @@ main > div:nth-child(1) > div > div button {
 }
 main > div:nth-child(2) {
     width : 10% ;
-    border : 1px solid var(--half-border) ;
     row-gap : calc(10% - 2em) ;
 }
 main > div:nth-child(2) > button {

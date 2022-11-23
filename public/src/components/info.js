@@ -8,6 +8,7 @@ export var up_ga_a ;
 function InfoCard (props) {
     const [ is , set_is ] = useState(true) ;
     const [ info , set_info ] = useState(props.p) ;
+    const [ load , set_load ] = useState(false) ;
     
 
     return is ? (
@@ -23,25 +24,34 @@ function InfoCard (props) {
                 <p>{ info.duration }</p>
                 <p>{ info.size } </p>
             </div>
-            <div>
-                <p onClick={ 
-                    () => {
-                        let f = ( info.media_type === 'mp3' ) ? 'mp4' : 'mp3' ;
-                        fetch('/rm?ID=' + info.id ) ;
-                        fetch(`/info?F=${f}&URL=${info.url}`)
-                            .then(res => res.json())
-                            .then(
-                                data =>   
-                                    set_info(data.nM) 
-                            ) ;
-                        
-                        
-                    }
-                } style={ { color : ( info.media_type === 'mp3' ) ?
-                     'var(--color)' : 
-                    'var(--color-2)'  } } >mp3</p>
-                <DoBtn tl={info.id} />
-            </div>
+            {
+                load ? <p>...</p> : (
+                    <div>
+                        <p onClick={ 
+                            () => {
+                            set_load(true) ;
+                            let f = ( info.media_type === 'mp3' ) ? 'mp4' : 'mp3' ;
+                            fetch('/rm?ID=' + info.id ) ;
+                            fetch(`/info?F=${f}&URL=${info.url}`)
+                                .then(res => res.json())
+                                .then(
+                                    data => {
+                                        set_info(data.nM) ;
+                                        set_load(false) ;
+                                        console.log(data.d)
+                                    }
+                                ) ;
+                            
+                            }
+                            } style={ { color : ( info.media_type === 'mp3' ) ?
+                            'var(--color)' : 
+                            'var(--color-2)'  } } >
+                                mp3
+                        </p>
+                        <DoBtn tl={info.id} />
+                    </div>
+                )
+            }
         </div>
     ) : []
 }

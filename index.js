@@ -27,11 +27,10 @@ class M_Array {
     })
   }
   rm_media_info( id ){
-    let tar = this.get_media(id) ,
-        t_p =  './output/' + tar.name ;
+    let tar = this.get_media(id) ;
         
     this._arr.splice( this._arr.indexOf(tar) , 1) ;
-    fs.unlinkSync( t_p )
+    fs.unlinkSync( tar.name )
   }
 }
 
@@ -42,21 +41,24 @@ app.get('/info' , (req,res) => {
   getVideoInfo( URL , req.query.F , data => {
     var newMedia = {
       url : URL ,
-      id : data.channel_id + req.query.F ,
+      id : data.display_id ,
       title : data.title ,
       duration : data.duration_string ,
       size : ((
         ( data.filesize !== null ) ? data.filesize : data.filesize_approx
       ) / 1000000).toFixed(2) + 'MB' ,
       media_type : req.query.F ,
-      name  : data.title + ' [' + data.display_id + '].' + req.query.F 
+      name  : ( req.query.F === 'mp4' ) ?
+        data.requested_downloads[0]._filename :
+        '.' + (data.requested_downloads[0]._filename.split('.')[1]) + '.' + data.acodec
+         
     } ;
     C_Media.set_media_info(newMedia) ;
-    res.json({ nM : newMedia }) 
+    res.json({ nM : newMedia , d : data }) 
   } )
 }) ;
 
-app.get('/media' , res => {
+app.get('/media' , (req,res) => {
   res.json( { 
     media : C_Media._arr 
   } )
@@ -69,7 +71,7 @@ app.get('/rm' , (req , res) => {
 
 app.get('/download' , async (req,res) => {
   let tar = C_Media.get_media(req.query.ID) ;
-  res.download( './output/' + tar.name ) ;
+  res.download( tar.name ) ;
 })
 
 ////
@@ -83,10 +85,10 @@ function getVideoInfo ( videoUrl , format , call ) {
     return ( type === 'mp3' ) ?
       {
         extractAudio : true ,
-        audioFormat : 'mp3' ,
+        audioFormat : 'best' ,
       } :
       {
-        format : 'mp4'
+        format : 'best'
       }
   } , options = Object.assign( is_audio(format) , {
         noCheckCertificates: true,

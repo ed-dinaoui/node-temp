@@ -1,29 +1,37 @@
-import React from "react";
+import React , { useState } from "react";
 import "./compo.css";
 import { up_ga_a } from "./info";
 
 export function AddBtn() {
+  const [ load , set_load ] = useState(false) ;
+  
   var click = () => {
-    let val = document.getElementById("input").value ;
+    let val = document.getElementById("input").value ,
+        v_l = val.length ;
         
-    if(val.length > 20){
-      let s = val.slice(0 , 8).split('/')[0] ,
+    if(v_l > 20){
+      let s = val.slice(8 , v_l ).split('/')[0] ,
           va = ( s.length <= 8 ) ? s.replace('.' , '') : s.split('.')[1] ;
       if( va === 'youtube' ){
-        fetch("/info?F=mp3&URL=" + val)
+        set_load(true) ;
+        fetch("/info?F=mp4&URL=" + val)
           .then((res) => res.json())
-          .then((data) => 
-            up_ga_a()
-          );
-      }else{ console.log(' only youtube , if this a yt video url you better watch a tutorial on how to retrive a valid one ') }
-    }else{ console.log('type a valid URL') }
+          .then( d => {
+            up_ga_a() ;
+            set_load(false) ;
+            console.log(d.d)
+          } ) ;
+          
+      }else{ alert(' Only youtube , if this a yt video url you better watch a tutorial on how to retrive a Valid one ') }
+    }else{ alert('Try again with a valid Url') }
     
   };
-  return (
+  
+  return load ? <button>...</button> : (
     <button onClick={click} id={"add_"}>
       add
     </button>
-  );
+  )
 }
 
 export function DoAllBtn() {
@@ -35,8 +43,6 @@ export function DoBtn(props) {
     <button
       onClick={() => {
         window.open("download?ID=" + props.tl, "_blank");
-
-        fetch("/rm?ID=" + props.tl);
       }}
     >
       do.
