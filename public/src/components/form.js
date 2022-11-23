@@ -19,7 +19,6 @@ export function AddBtn() {
           .then( d => {
             up_ga_a() ;
             set_load(false) ;
-            console.log(d.d)
           } ) ;
           
       }else{ alert(' Only youtube , if this a yt video url you better watch a tutorial on how to retrive a Valid one ') }

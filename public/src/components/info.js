@@ -38,7 +38,6 @@ function InfoCard (props) {
                                     data => {
                                         set_info(data.nM) ;
                                         set_load(false) ;
-                                        console.log(data.d)
                                     }
                                 ) ;
                             

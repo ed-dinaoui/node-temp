@@ -54,7 +54,7 @@ app.get('/info' , (req,res) => {
          
     } ;
     C_Media.set_media_info(newMedia) ;
-    res.json({ nM : newMedia , d : data }) 
+    res.json({ nM : newMedia }) 
   } )
 }) ;
 
