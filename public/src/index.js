@@ -5,6 +5,8 @@ import App from './App';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
+document.title = 'Node-Temp'
+
 root.render(
   <React.StrictMode>
     <App />
